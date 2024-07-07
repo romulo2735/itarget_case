@@ -1,0 +1,45 @@
+version: "3.5"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - network_itarget
+    db:
+        image: mysql:8.0
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: 'db_itarget'
+            MYSQL_ROOT_PASSWORD: 'itarget'
+            MYSQL_PASSWORD: 'itarget'
+            MYSQL_USER: 'itarget'
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - network_itarget
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - network_itarget
+    redis:
+        image: redis:latest
+        networks:
+            - network_itarget
+networks:
+    network_itarget:
+        driver: bridge
