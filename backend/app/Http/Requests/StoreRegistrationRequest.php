@@ -29,4 +29,11 @@ class StoreRegistrationRequest extends FormRequest
             'event_id' => 'required|exists:events,id',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'cpf.unique' => 'O :attribute já está inscrito no evento.',
+        ];
+    }
 }
