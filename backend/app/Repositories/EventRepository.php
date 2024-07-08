@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Resources\Json\PaginatedResourceResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 /**
  * Class EventRepository
@@ -13,11 +16,12 @@ class EventRepository implements EventRepositoryInterface
 {
 
     /**
-     * @return Collection
+     * @param $per_page
+     * @return LengthAwarePaginator
      */
-    public function getAllEvents(): Collection
+    public function getAllEvents($per_page): LengthAwarePaginator
     {
-        return Event::all();
+        return Event::query()->paginate($per_page);
     }
 
     /**

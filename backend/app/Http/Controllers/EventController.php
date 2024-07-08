@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Services\EventService;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
@@ -27,11 +28,12 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->eventService->listEvents();
+        return $this->eventService->listEvents($request->get('per_page'));
     }
 
     /**

@@ -10,9 +10,9 @@ class EventService
     {
     }
 
-    public function listEvents()
+    public function listEvents($per_page)
     {
-        return $this->eventRepository->getAllEvents();
+        return $this->eventRepository->getAllEvents($per_page);
     }
 
     public function getEventById($id)
