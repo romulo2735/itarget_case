@@ -9,7 +9,9 @@ use App\Repositories\{
 };
 use App\Repositories\{
     RegistrationRepository,
-    EventRepository
+    EventRepository,
+    UserRepository,
+    UserRepositoryInterface
 };
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(EventRepositoryInterface::class, EventRepository::class);
         $this->app->bind(RegistrationRepositoryInterface::class, RegistrationRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
