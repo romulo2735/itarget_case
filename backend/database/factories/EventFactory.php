@@ -21,10 +21,10 @@ class EventFactory extends Factory
         $end_date = Carbon::parse($start_date)->addDays(rand(1, 30))->format('Y-m-d');
 
         return [
-            'name' => $this->faker->title,
+            'name' => "Evento: {$this->faker->name}",
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'status' => true,
+            'status' => $this->faker->boolean,
         ];
     }
 }
