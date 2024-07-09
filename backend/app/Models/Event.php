@@ -22,4 +22,9 @@ class Event extends Model
         'end_date',
         'status',
     ];
+
+    protected $casts = [
+        'start_date' => 'date:d/m/Y',
+        'end_date' => 'date:d/m/Y',
+    ];
 }
