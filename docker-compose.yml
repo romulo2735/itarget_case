@@ -1,27 +1,55 @@
-version: '3.8'
+version: "3.5"
+
 services:
   backend:
-    build: ./backend
-    ports:
-      - '8989:80'
+    build:
+      context: .
+      dockerfile: ./backend
+    restart: unless-stopped
+    working_dir: /var/www/
     volumes:
       - ./backend:/var/www
+    networks:
+      - network_itarget
   frontend:
     build: ./frontend
     ports:
       - '3000:3000'
     volumes:
       - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - network_itarget
   db:
-    image: mysql:8
+    image: mysql:8.0
+    platform: linux/x86_64
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'db_itarget'
       MYSQL_ROOT_PASSWORD: 'itarget'
       MYSQL_PASSWORD: 'itarget'
       MYSQL_USER: 'itarget'
-    ports:
-      - '3306:3306'
     volumes:
-      - db_data:/var/lib/mysql
-volumes:
-  db_data:
+      - ./.docker/mysql/dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - network_itarget
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8989:80"
+    volumes:
+      - ./:/var/www
+      - ./backend/docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - network_itarget
+  redis:
+    image: redis:latest
+    networks:
+      - network_itarget
+networks:
+  network_itarget:
+    driver: bridge
