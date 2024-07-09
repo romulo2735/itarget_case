@@ -123,28 +123,17 @@ const Registration: React.FC<RegistrationFormProps> = ({ eventId, eventName, onC
                         onChange={handleChange}
                         required
                     />
-                    <InputMask
-                        mask="999.999.999-99"
+                    <TextField
+                        label="CPF"
+                        name="cpf"
+                        type="text"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
                         value={formData.cpf}
-                        onChange={(e) => handleChange({ target: { name: 'cpf', value: e.target.value } })}
-                    >
-                        {(inputProps: any) => (
-                            <TextField
-                                {...inputProps}
-                                margin="dense"
-                                label="CPF"
-                                type="text"
-                                fullWidth
-                                name="cpf"
-                                required
-                            />
-                        )}
-                    </InputMask>
-                    {cpfError && (
-                        <Alert severity="error" sx={{ mb: 2 }}>
-                            {cpfError}
-                        </Alert>
-                    )}
+                        onChange={handleChange}
+                        required
+                    />
                     <Button
                         type="submit"
                         variant="contained"
