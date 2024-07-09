@@ -2,13 +2,33 @@
 
 Clone o projeto: ``git clone git@github.com:romulo2735/itarget_case.git``
 
-Usando o docker crie o ambiente: ``docker-compose up -d``
+## Backend 
 
-Backend: ``http://127.0.0.1:8989``
+#### Deploy 
 
-Frontend: ``http://localhost:3000``
+````shell
+cd backend
 
-### Backend Endpoints 
+docker-compose up -d
+
+cp .env.example .env
+
+docker-compose exec app composer install
+
+docker-compose exec app php artisan key:generate
+````
+
+URL: ````http://127.0.0.1:8989````
+
+Credenciais do MYSQL:
+````
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=db_itarget
+DB_USERNAME=itarget
+DB_PASSWORD=itarget
+````
 
 ````
   GET|HEAD        / ......................................................................................................................... generated::WYq8GN6QAKBVL1oe
@@ -22,7 +42,7 @@ Frontend: ``http://localhost:3000``
   GET|HEAD        api/events/{event}/registrations ........................................ generated::KdnhwkJOhAetr0Dw › RegistrationController@getRegistrationsForEvent
   POST            api/login .......................................................................................... generated::i7ByCTutNBGH3jbI › UserController@login
   POST            api/register .................................................................................... generated::VUCoBqzGIfjwzDW2 › UserController@register
-  GET|HEAD        api/registrations .................................................................................. registrations.index › RegistrationController@index
+  GET|HEAD        aápi/registrations .................................................................................. registrations.index › RegistrationController@index
   POST            api/registrations .................................................................................. registrations.store › RegistrationController@store
   GET|HEAD        api/registrations/create ......................................................................... registrations.create › RegistrationController@create
   GET|HEAD        api/registrations/{registration} ..................................................................... registrations.show › RegistrationController@show
@@ -33,7 +53,20 @@ Frontend: ``http://localhost:3000``
 ````
 
 
-### Páginas
+# Frontend
+
+#### Deploy
+````shell
+
+cd frontend
+
+docker-compose up -d --build
+
+docker run -d -p 3000:3000 frontend
+````
+
+URL: ````http://127.0.0.1:3000````
+
 
 `register`
 ![alt text](screenshot/register.png))
