@@ -9,5 +9,6 @@ Route::post('/login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::put('user/update', [UserController::class, 'update']);
     Route::resource('/events', EventController::class);
+    Route::get('/events/{event}/registrations', [RegistrationController::class, 'getRegistrationsForEvent']);
     Route::resource('/registrations', RegistrationController::class);
 });

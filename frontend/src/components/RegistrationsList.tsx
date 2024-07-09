@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, Table, TableBody, TableCell, TableHead, TableRow, TextField, Box, Pagination, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Table, TableBody, TableCell, TableHead, TableRow, TextField, Box, Pagination } from '@mui/material';
 import apiService from '@/utils/axiosConfig';
 import { IRegistration } from '@/interfaces/IRegistration';
 
@@ -18,7 +18,6 @@ const RegistrationsList: React.FC<RegistrationsListProps> = ({ eventId, eventNam
     const [search, setSearch] = useState('');
     const token = localStorage.getItem('authToken');
 
-
     useEffect(() => {
         const fetchRegistrations = async () => {
             const response = await apiService.get(`/api/events/${eventId}/registrations?page=${page}&per_page=${pageSize}&search=${search}`, {
@@ -30,10 +29,10 @@ const RegistrationsList: React.FC<RegistrationsListProps> = ({ eventId, eventNam
             setTotal(response.data.total);
         };
 
-        if (open) {
+        if (open && token) {
             fetchRegistrations();
         }
-    }, [eventId, page, pageSize, search, open]);
+    }, [eventId, page, pageSize, search, open, token]);
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);

@@ -15,6 +15,11 @@ class RegistrationService
         return $this->registrationRepository->getAllRegistrations();
     }
 
+    public function listRegistrationsForEvent($eventId, $per_page, $search = null)
+    {
+        return $this->registrationRepository->getAllRegistrationsForEvent($eventId, $per_page, $search);
+    }
+
     public function getRegistrationById($id)
     {
         return $this->registrationRepository->getRegistrationById($id);

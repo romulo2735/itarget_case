@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
+use App\Models\Event;
 use App\Models\Registration;
 use App\Services\RegistrationService;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,15 @@ class RegistrationController extends Controller
     public function index(Request $request)
     {
         return $this->registrationService->listRegistrations();
+    }
+
+    public function getRegistrationsForEvent(Request $request, Event $event)
+    {
+        return $this->registrationService->listRegistrationsForEvent(
+            $event->id,
+            $request->get('per_page'),
+            $request->get('search')
+        );
     }
 
     /**
